@@ -4,8 +4,8 @@ import com.example.demo.appuser.AppUser;
 import com.example.demo.appuser.AppUserRole;
 import com.example.demo.appuser.AppUserService;
 import com.example.demo.email.EmailSender;
-import com.example.demo.registration.token.ConfirmationToken;
-import com.example.demo.registration.token.ConfirmationTokenService;
+import com.example.demo.registration.token.entity.ConfirmationTokenEntity;
+import com.example.demo.registration.token.service.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +38,7 @@ public class RegistrationService {
                 )
         );
 
-        String link = "http://6ffa-37-214-35-185.eu.ngrok.io/api/v1/registration/confirm?token=" + token;
+        String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
         emailSender.send(
                 request.getEmail(),
                 buildEmail(request.getFirstName(), link));
@@ -48,16 +48,16 @@ public class RegistrationService {
 
     @Transactional
     public String confirmToken(String token) {
-        ConfirmationToken confirmationToken = confirmationTokenService
+        ConfirmationTokenEntity confirmationTokenEntity = confirmationTokenService
                 .getToken(token)
                 .orElseThrow(() ->
                         new IllegalStateException("token not found"));
 
-        if (confirmationToken.getConfirmedAt() != null) {
+        if (confirmationTokenEntity.getConfirmedAt() != null) {
             throw new IllegalStateException("email already confirmed");
         }
 
-        LocalDateTime expiredAt = confirmationToken.getExpiresAt();
+        LocalDateTime expiredAt = confirmationTokenEntity.getExpiresAt();
 
         if (expiredAt.isBefore(LocalDateTime.now())) {
             throw new IllegalStateException("token expired");
@@ -65,10 +65,19 @@ public class RegistrationService {
 
         confirmationTokenService.setConfirmedAt(token);
         appUserService.enableAppUser(
-                confirmationToken.getAppUser().getEmail());
+                confirmationTokenEntity.getAppUser().getEmail());
         return "confirmed";
     }
-
+//    private String buildEmail(String name, String link) {
+//        // Чтение содержимого файла "email_template.html"
+//        try {
+//            String filePath = "путь/к/email_template.html";
+//            String content = Files.readString(Paths.get(filePath));
+//            return content;
+//        } catch (IOException e) {
+//            throw new IllegalStateException("Failed to read email template file", e);
+//        }
+//    }
     private String buildEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +

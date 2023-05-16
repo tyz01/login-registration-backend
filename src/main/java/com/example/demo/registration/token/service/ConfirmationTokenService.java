@@ -1,5 +1,7 @@
-package com.example.demo.registration.token;
+package com.example.demo.registration.token.service;
 
+import com.example.demo.registration.token.entity.ConfirmationTokenEntity;
+import com.example.demo.registration.token.repository.ConfirmationTokenRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +14,11 @@ public class ConfirmationTokenService {
 
     private final ConfirmationTokenRepository confirmationTokenRepository;
 
-    public void saveConfirmationToken(ConfirmationToken token) {
+    public void saveConfirmationToken(ConfirmationTokenEntity token) {
         confirmationTokenRepository.save(token);
     }
 
-    public Optional<ConfirmationToken> getToken(String token) {
+    public Optional<ConfirmationTokenEntity> getToken(String token) {
         return confirmationTokenRepository.findByToken(token);
     }
 

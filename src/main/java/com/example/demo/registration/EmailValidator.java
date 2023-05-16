@@ -6,9 +6,10 @@ import java.util.function.Predicate;
 
 @Service
 public class EmailValidator implements Predicate<String> {
+    private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+
     @Override
     public boolean test(String s) {
-//        TODO: Regex to validate email
-        return true;
+        return s.matches(EMAIL_REGEX);
     }
 }

@@ -1,6 +1,7 @@
-package com.example.demo.registration.token;
+package com.example.demo.registration.token.entity;
 
 import com.example.demo.appuser.AppUser;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +13,8 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
-public class ConfirmationToken {
+@AllArgsConstructor
+public class ConfirmationTokenEntity {
 
     @SequenceGenerator(
             name = "confirmation_token_sequence",
@@ -44,10 +46,10 @@ public class ConfirmationToken {
     )
     private AppUser appUser;
 
-    public ConfirmationToken(String token,
-                             LocalDateTime createdAt,
-                             LocalDateTime expiresAt,
-                             AppUser appUser) {
+    public ConfirmationTokenEntity(String token,
+                                   LocalDateTime createdAt,
+                                   LocalDateTime expiresAt,
+                                   AppUser appUser) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;

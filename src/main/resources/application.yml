@@ -3,8 +3,13 @@ server:
     include-message: always
     include-binding-errors: always
   port: 8080
-
+  max-http-header-size: 64KB
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
   datasource:
     password: 1234
     url: jdbc:postgresql://localhost:5433/register
@@ -21,8 +26,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: tyzlife01@gmail.com
-    password: jfxzxjgyjklewzjq
+    username: toxiccorporationservice@gmail.com
+    password: pcflrpyowssowqcz
 
     properties:
       mail:

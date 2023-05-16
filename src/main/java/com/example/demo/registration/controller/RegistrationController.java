@@ -1,5 +1,7 @@
-package com.example.demo.registration;
+package com.example.demo.registration.controller;
 
+import com.example.demo.registration.RegistrationRequest;
+import com.example.demo.registration.RegistrationService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

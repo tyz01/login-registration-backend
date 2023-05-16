@@ -1,4 +1,4 @@
-package com.example.demo.login;
+package com.example.demo.login.controller;
 
 import com.example.demo.appuser.AppUser;
 import com.example.demo.appuser.AppUserService;
@@ -24,9 +24,9 @@ public class LoginController {
         try {
             UserDetails userDetails = appUserService.loadUserByUsername(email);
 
-            if (!userDetails.isEnabled()) {
-                return "confirm your email";
-            }
+//            if (!userDetails.isEnabled()) {
+//                return "confirm your email";
+//            }
             Authentication authentication = new UsernamePasswordAuthenticationToken(
                     email,
                     password
@@ -34,7 +34,6 @@ public class LoginController {
 
             Authentication authenticated = authenticationManager.authenticate(authentication);
             SecurityContextHolder.getContext().setAuthentication(authenticated);
-
 
             return "Login successful!";
         } catch (AuthenticationException e) {
